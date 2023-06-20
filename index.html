@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <title>Vite App</title>
   </head>
   <body>
@@ -27,14 +28,13 @@
       </section>
       
       <h2>
-        Total Expenses <em>PHP 2,000.00</em>
+        Total Expenses <em>PHP <span id="total-expense">2,000.00</span></em>
       </h2>
       <section id="display-section">
         <h3>My Expenses</h3>
-        <div>
-          <p>Electricity</p>
-          <p>PHP 2,000.00</p>
-        </div>
+        <ul id="expense-list">
+          
+        </ul>
       </section>
       
     </main>
