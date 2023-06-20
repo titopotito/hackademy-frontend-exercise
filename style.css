@@ -1,97 +1,137 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light;
+    color: black;
+    background-color: #fff6ea;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    margin-top: 264px;
+    margin-bottom: 38px;
+    font-size: 3rem;
+    line-height: 1.5rem;
+    font-weight: 700;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+h2 {
+    margin-top: 59px;
+    margin-bottom: 45px;
+    font-size: 2rem;
+    line-height: 1.5rem;
+    font-weight: 400;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+h2 em {
+    font-weight: 700;
 }
 
-.card {
-  padding: 2em;
+#input-section {
+    width: 734px;
+    display: grid;
+    grid-template-columns: 380px 201px 121px;
+    column-gap: 1rem;
 }
 
-.read-the-docs {
-  color: #888;
+#input-section div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+#input-section div:last-child {
+    flex-direction: column-reverse;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
+#input-section label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+#input-section input {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+}
+
+#input-section ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #94a3b8;
+    opacity: 1; /* Firefox */
+    font-weight: 400;
+}
+
+#input-section :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+#input-section ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+#input-section button {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #0f172a;
+    padding: 8px 16px;
+    color: #ffffff;
+}
+
+#display-section {
+    width: 640px;
+}
+
+#display-section h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 8px;
+    line-height: 1.5rem;
+}
+
+#display-section div {
     background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    border-radius: 0.375rem;
+    padding: 12px 16px;
+}
+
+#display-section p:first-child {
+    margin: 0;
+    margin-bottom: 4px;
+    font-size: 0.875rem;
+    line-height: 0.875rem;
+    font-weight: 500;
+}
+
+#display-section p:last-child {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    font-weight: 700;
 }
