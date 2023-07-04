@@ -5,18 +5,22 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-    const [expenses, setExpenses] = useState(() => {
+    // use useMemo() to access data from localStorage
+    const localStorageData = useMemo(() => {
         const savedItem = localStorage.getItem("dataKey");
         const parsedItem = JSON.parse(savedItem);
         return parsedItem || [];
     });
+
+    const [expenses, setExpenses] = useState(localStorageData);
     const [initialRender, setInitialRender] = useState(true);
     const titleRef = useRef();
     const amountRef = useRef();
 
+    // Runs when expense is updated showing an alert().
     useEffect(() => {
         localStorage.setItem("dataKey", JSON.stringify(expenses));
-        // alert() will not run on initial render. Only when new expense are added.
+        // alert() will not run on initial render
         initialRender ? setInitialRender(false) : alert("Added New Expense");
     }, [expenses]);
 
