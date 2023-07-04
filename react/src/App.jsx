@@ -1,43 +1,23 @@
 import { useState, useEffect, useMemo, useRef, forwardRef } from "react";
+import { v4 } from "uuid";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-// const sampleData = [
-//     {
-//         id: 1,
-//         title: "Rent",
-//         amount: 1000,
-//     },
-//     {
-//         id: 2,
-//         title: "Groceries",
-//         amount: 200,
-//     },
-//     {
-//         id: 3,
-//         title: "Utilities",
-//         amount: 150,
-//     },
-//     {
-//         id: 4,
-//         title: "Transportation",
-//         amount: 100,
-//     },
-//     {
-//         id: 5,
-//         title: "Entertainment",
-//         amount: 50,
-//     },
-// ];
-
 function App() {
-    const [expenses, setExpenses] = useState([]);
+    const [expenses, setExpenses] = useState(() => {
+        const savedItem = localStorage.getItem("dataKey");
+        const parsedItem = JSON.parse(savedItem);
+        return parsedItem || [];
+    });
+    const [initialRender, setInitialRender] = useState(true);
     const titleRef = useRef();
     const amountRef = useRef();
 
     useEffect(() => {
-        expenses.length > 0 ? alert("Added New Expense") : console.log("No Expenses");
+        localStorage.setItem("dataKey", JSON.stringify(expenses));
+        // alert() will not run on initial render. Only when new expense are added.
+        initialRender ? setInitialRender(false) : alert("Added New Expense");
     }, [expenses]);
 
     const handleSubmit = (e) => {
@@ -46,7 +26,7 @@ function App() {
         const title = titleRef.current.value;
         const amount = amountRef.current.value;
 
-        setExpenses([...expenses, { id: Math.random(), title: title, amount: +amount }]);
+        setExpenses([...expenses, { id: v4(), title: title, amount: +amount }]);
 
         titleRef.current.value = "";
         amountRef.current.value = "";
@@ -83,14 +63,16 @@ const InputGroup = forwardRef((props, ref) => {
 });
 
 function Total(props) {
-    const total = props.data
-        .reduce(function (total, expense) {
-            return total + expense.amount;
-        }, 0)
-        .toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
+    const total = useMemo(() =>
+        props.data
+            .reduce(function (total, expense) {
+                return total + expense.amount;
+            }, 0)
+            .toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            })
+    );
 
     return (
         <em>
@@ -104,26 +86,20 @@ function ExpenseList(props) {
         return <p className="default-message">No Expense Written</p>;
     }
 
-    const expenseList = useMemo(
-        () =>
-            props.data.map((expense) => (
-                <li key={expense.id.toString()} className="expense-li">
-                    <p>{expense.title}</p>
-                    <p className={expense.amount > 100 ? "red" : "green"}>
-                        PHP{" "}
-                        <span>
-                            {expense.amount.toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                            })}
-                        </span>
-                    </p>
-                </li>
-            )),
-        [props.data]
-    );
-
-    console.log(expenseList);
+    const expenseList = props.data.map((expense) => (
+        <li key={expense.id.toString()} className="expense-li">
+            <p>{expense.title}</p>
+            <p className={expense.amount > 100 ? "red" : "green"}>
+                PHP{" "}
+                <span>
+                    {expense.amount.toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                    })}
+                </span>
+            </p>
+        </li>
+    ));
 
     return <ul>{expenseList}</ul>;
 }
