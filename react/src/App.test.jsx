@@ -1,3 +1,6 @@
+import { App } from "./App.jsx";
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+
 const sampleData = [
     {
         id: 1,
@@ -26,4 +29,8 @@ const sampleData = [
     },
 ];
 
-export { sampleData };
+test("", () => {
+    render(<App />);
+});
+
+afterEach(cleanup);

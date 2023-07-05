@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo, useRef, forwardRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, forwardRef } from "react";
 import { v4 } from "uuid";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+// import reactLogo from "./assets/react.svg";
+// import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
 
     const [expenses, setExpenses] = useState(localStorageData);
     const [initialRender, setInitialRender] = useState(true);
+    const [successMessageIsVisible, setSuccessMessageIsVisible] = useState(false);
     const titleRef = useRef();
     const amountRef = useRef();
 
@@ -21,8 +22,10 @@ function App() {
     useEffect(() => {
         localStorage.setItem("dataKey", JSON.stringify(expenses));
         // alert() will not run on initial render
-        initialRender ? setInitialRender(false) : alert("Added New Expense");
+        initialRender ? setInitialRender(false) : setSuccessMessageIsVisible(true);
     }, [expenses]);
+
+    const handleSuccessMessage = (isVisible) => setSuccessMessageIsVisible(isVisible);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -43,7 +46,9 @@ function App() {
                 <InputGroup ref={titleRef} label="Description" type="text" placeholder="Enter Description" />
                 <InputGroup ref={amountRef} label="Amount" type="number" placeholder="Enter Amount" />
                 <div>
-                    <button type="submit">Add Expense</button>
+                    <button className="submit-button" type="submit">
+                        Add Expense
+                    </button>
                 </div>
             </form>
             <h2>
@@ -53,6 +58,24 @@ function App() {
                 <h3>My Expenses</h3>
                 <ExpenseList data={expenses} />
             </section>
+            <SuccessMessage isVisible={successMessageIsVisible} setState={handleSuccessMessage} />
+        </>
+    );
+}
+
+function SuccessMessage(props) {
+    return (
+        <>
+            {props.isVisible ? (
+                <div className="success-message">
+                    <p>Added new expense!</p>
+                    <button onClick={() => props.setState(false)}>
+                        <span>close</span>
+                    </button>
+                </div>
+            ) : (
+                console.log()
+            )}
         </>
     );
 }
@@ -67,15 +90,17 @@ const InputGroup = forwardRef((props, ref) => {
 });
 
 function Total(props) {
-    const total = useMemo(() =>
-        props.data
-            .reduce(function (total, expense) {
-                return total + expense.amount;
-            }, 0)
-            .toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            })
+    const total = useMemo(
+        () =>
+            props.data
+                .reduce(function (total, expense) {
+                    return total + expense.amount;
+                }, 0)
+                .toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                }),
+        [props.data]
     );
 
     return (
