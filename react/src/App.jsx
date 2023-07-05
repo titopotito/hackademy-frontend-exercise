@@ -18,15 +18,17 @@ function App() {
     const titleRef = useRef();
     const amountRef = useRef();
 
-    // Runs when expense is updated showing an alert().
+    // Runs when expense is updated showing a message.
     useEffect(() => {
         localStorage.setItem("dataKey", JSON.stringify(expenses));
-        // alert() will not run on initial render
+        // prevent message to appear on initial render
         initialRender ? setInitialRender(false) : setSuccessMessageIsVisible(true);
     }, [expenses]);
 
+    // handle setSuccessMessageIsVisible so that it can be passed in child component
     const handleSuccessMessage = (isVisible) => setSuccessMessageIsVisible(isVisible);
 
+    // handleSubmit runs when form is submitted
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -59,23 +61,6 @@ function App() {
                 <ExpenseList data={expenses} />
             </section>
             <SuccessMessage isVisible={successMessageIsVisible} setState={handleSuccessMessage} />
-        </>
-    );
-}
-
-function SuccessMessage(props) {
-    return (
-        <>
-            {props.isVisible ? (
-                <div className="success-message">
-                    <p>Added new expense!</p>
-                    <button onClick={() => props.setState(false)}>
-                        <span>close</span>
-                    </button>
-                </div>
-            ) : (
-                console.log()
-            )}
         </>
     );
 }
@@ -131,6 +116,23 @@ function ExpenseList(props) {
     ));
 
     return <ul>{expenseList}</ul>;
+}
+
+function SuccessMessage(props) {
+    return (
+        <>
+            {props.isVisible ? (
+                <div className="success-message">
+                    <p>Added new expense!</p>
+                    <button onClick={() => props.setState(false)}>
+                        <span>close</span>
+                    </button>
+                </div>
+            ) : (
+                console.log()
+            )}
+        </>
+    );
 }
 
 export { App };
